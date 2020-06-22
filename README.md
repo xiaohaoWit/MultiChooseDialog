@@ -9,6 +9,7 @@
     multistageDialog.setListener(new DggMultistageDialog.OnChooseItemListener<ProvinceData>() {
         @Override
         public void onChoose(ProvinceData data,List<ProvinceData> dataList) {
+	    ///每次选择后的回调，可根据需要关闭对话框或继续添加下一级的数据，这个过程中如果配置了loadView会显示
             if (data!=null&&data.getChildren()!=null&&data.getChildren().size()>0){
                 multistageDialog.addData(data.getChildren());
             }else {
@@ -21,8 +22,8 @@
             }
         }
     });
-    multistageDialog.show();
-    multistageDialog.addData(jsonBean);
+    multistageDialog.show();  
+    multistageDialog.addData(jsonBean); ///添加数据
 
 	可配置属性
     //当前级选中字体颜色
