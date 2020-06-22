@@ -1,2 +1,58 @@
 # MultiChooseDialog
 多级选择器
+
+
+    DggMultistageDialog multistageDialog =new DggMultistageDialog.Builder(this)
+        .setTitle("选择所在地区")
+        .setCurrentColor(0xff525BDF)
+        .build();
+    multistageDialog.setListener(new DggMultistageDialog.OnChooseItemListener<ProvinceData>() {
+        @Override
+        public void onChoose(ProvinceData data,List<ProvinceData> dataList) {
+            if (data!=null&&data.getChildren()!=null&&data.getChildren().size()>0){
+                multistageDialog.addData(data.getChildren());
+            }else {
+                multistageDialog.dismiss();
+                String value="";
+                for (ProvinceData provinceData:dataList){
+                    value=value+provinceData.getName();
+                }
+                ToastUtils.showShort(value);
+            }
+        }
+    });
+    multistageDialog.show();
+    multistageDialog.addData(jsonBean);
+
+	可配置属性
+    //当前级选中字体颜色
+    private int currentColor=0xff10BBB8;
+    //前面级选中的字体颜色
+    private int normalColor=0xff333333;
+    //关闭按钮图标资源 默认不显示
+    private int closeBtnRes=-1;
+    //标题颜色
+    private int titleColor=0xff333333;
+    //标题字体大小
+    private int titleSize=18;
+    //选中了的字体大小
+    private int selectSize=14;
+    private Context context;
+    //标题文本
+    private String title;
+      //数据加载框
+    private View loadingView;
+
+	其中的数据需要实现接口MultistageData
+    public interface MultistageData {
+        //返回显示的字段
+        String getValue();
+    
+        //选中颜色
+        @ColorInt
+        int getSelectedColor();
+    
+    	 //正常颜色
+         @ColorInt
+        int getNormalColor();
+    }
